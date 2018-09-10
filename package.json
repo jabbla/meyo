@@ -1,0 +1,17 @@
+{
+  "name": "melo",
+  "version": "1.0.0",
+  "description": "pageProto generator",
+  "main": "index.js",
+  "bin": {
+    "meyo": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.18.0"
+  }
+}
