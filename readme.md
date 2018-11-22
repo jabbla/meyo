@@ -1,5 +1,15 @@
 # meyo
 
+## 启动本地页面搭建系统
+
+启动页面服务
+```bash
+meyo server
+```
+（如果之前有创建过proto，在启动服务前，将proto仓库文件复制到``/proto``中，meyo会读取该目录下的原型文件）
+
+Proto分类规则
+
 ## 使用方法
 ```bash
 meyo -p/--proto ./pageProto.json
