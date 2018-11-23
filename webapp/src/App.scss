@@ -1,0 +1,39 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  height: 100%;
+  text-align: center;
+  .header {
+    display: flex;
+    height: 65px;
+    align-items: center;
+    justify-content: space-between;
+    .m-header-menu {
+      margin-left: 10px;
+    }
+  }
+  .m-app {
+    height: 100%;
+  }
+  .m-content-wraper {
+    margin: 24px 0;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  line-height: 31px;
+  color: white;
+  height: 31px;
+  margin: 16px 28px 16px 0;
+  .m-subtitle {
+    display: inline-flex;
+    margin-left: 10px;
+    align-items: center;
+    .u-new-btn {
+      font-size: 15px;
+      padding-left: 5px;
+    }
+  }
+}
