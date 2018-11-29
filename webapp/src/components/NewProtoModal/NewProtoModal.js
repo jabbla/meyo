@@ -17,7 +17,8 @@ const NewProtoModal = (context) => {
             if(err){
                 return;
             }
-            console.log(fieldsValue);
+            _this.props.setCurrentProto(fieldsValue);
+            _this.jumpPage();
 
             _this.setState(state => ({
                 showNewProtoModal: false
@@ -26,12 +27,10 @@ const NewProtoModal = (context) => {
     };
   
     let handleCancel = () => {
-        _this.setState(state => (
-        {
+        _this.setState(state => ({
           showNewProtoModal: false
         }
       ))
-      
     };
   
     return (modalState) => {
@@ -53,6 +52,8 @@ const NewProtoModal = (context) => {
         <Modal
           centered
           title="新建原型"
+          cancelText="取消"
+          okText="确认"
           visible={showNewProtoModal}
           onOk={handleOk}
           onCancel={handleCancel}
