@@ -3,10 +3,12 @@ import {
     Modal, Form, Radio, Input
 } from 'antd';
 
+import { connect } from 'react-redux';
+
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
-const NewProtoModal = (context) => {
+const NewProtoModal = (context, { protoTypes }) => {
     let _this = context;
     let showNewProtoModal = false;
 
@@ -72,8 +74,9 @@ const NewProtoModal = (context) => {
               })(
                 <RadioGroup 
                 >
-                  <Radio value={1}>模块原型</Radio>
-                  <Radio value={2}>页面原型</Radio>
+                  {protoTypes.map(type => (
+                    <Radio value={type.id} key={type.id}>{type.name}</Radio>
+                  ))}
                 </RadioGroup>
               )}
             </FormItem>

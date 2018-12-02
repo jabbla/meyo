@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Draggable, Swappable } from '@shopify/draggable';
+import { initProtoDom } from "../../../../lib/dom";
 
 import { connect } from 'react-redux';
 import './index.scss';
@@ -13,23 +14,21 @@ class ElementOptions extends Component {
 
     componentDidMount() {
         this.initDraggables();
-        console.log(Draggable);
     }
 
     initDraggables() {
-
         const ElementList = document.querySelector('#element-list');
-        console.log(ElementList);
-        // this.state.draggable = new Swappable(ElementList, {
-        //     draggable: '.u-list-item'
-        // });
+
+        initProtoDom(ElementList.querySelectorAll('.u-list-item'));
     }
 
     render() {
         return (
             <div className="m-element-list m-dropable" id="element-list">
-                {this.props.elements.map(elem => (
+                {this.props.elements.map((elem, index) => (
                     <div 
+                        draggable="true"
+                        key={index}
                         className="u-list-item"
                         data-type={elem.type}
                         data-tagname={elem.tagname}

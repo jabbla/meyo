@@ -1,7 +1,18 @@
 .m-layout-wraper {
     display: flex;
+    flex-direction: column;
+    .m-layout-title {
+        flex-grow: 0;
+    }
     .m-layout-region {
         flex-grow: 1;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        .m-drop-zone {
+            width: 300px;
+            height:300px;
+            background-color: yellow;
+        }
     }
 }
 

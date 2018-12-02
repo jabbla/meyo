@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Layout, Tabs } from 'antd';
 import { Draggable, Swappable, Droppable } from '@shopify/draggable';
+import Container from '../../lib/Container';
+import { connect } from 'react-redux';
 
 import ElementOptions from './components/ElementOptions';
 import ModuleOptions from "./components/ModuleOptions";
@@ -15,27 +17,30 @@ class NewProto extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentProto: {}
         };
+        
         this.onOptionChange = this.onOptionChange.bind(this);
     }
 
-    componentDidMount() {
-        this.initDraggables();
+    detectStorage() {
+        let currentProto = (Object.keys(this.props.currentProto).length && this.props.currentProto) || JSON.parse(window.localStorage.getItem('currentProto'));
+        this.setState({
+            currentProto
+        });
+        window.localStorage.setItem('currentProto', JSON.stringify(currentProto));
     }
 
-    initDraggables() {
-        const LayoutRegion = document.querySelector('#layout-region');
-        const TestRegion = document.querySelector('#test-region');
-        const droppable = this.state.droppable = new Droppable([TestRegion, LayoutRegion], {
-            draggable: '.draggable',
-            dropzone: '.dropable',
-            mirror: {
-                constrainDimensions: true,
-            }
-        });
+    componentDidMount() {
+        this.detectStorage();
+        this.initContainer();
+    }
 
-        droppable.on('drag:start', (evt) => {
-            console.log('fffff');
+    initContainer() {
+        const container = document.querySelector('#layout-region');
+
+        this.setState({
+            containLayout: new Container({elem: container})
         });
     }
 
@@ -44,6 +49,8 @@ class NewProto extends Component {
     }
 
     render() {
+        let { name: protoName, desc: protoDesc, type: protoType } = this.state.currentProto;
+        let { protoTypeMap } = this.props;
         return (
             <Layout
                 id="draggable-container"
@@ -73,16 +80,11 @@ class NewProto extends Component {
                     style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}
                     className="m-layout-wraper"
                 >
-                    <div id="test-region" className="m-test-region">
-                        <div className="draggable">1</div>
-                        <div className="draggable">2</div>
-                        <div className="draggable">3</div>
-                    </div>
+                    <h6 className="m-layout-title">
+                        原型类型：{protoTypeMap[protoType]}，原型名称：{protoName}，原型描述：{protoDesc}
+                    </h6>
                     <div className="m-layout-region m-dropable" id="layout-region">
-                        布局区域
-                        <div className="dropable"></div>
-                        <div className="dropable"></div>
-                        <div className="dropable"></div>
+                        
                     </div>
                 </Content>
                 </Layout>
@@ -91,4 +93,14 @@ class NewProto extends Component {
     }
 };
 
-export default NewProto;
+const mapStateToProps = (state) => {
+    return {
+        currentProto: state.currentProto,
+        protoTypeMap: state.protoTypes.reduce((pre, cur) => {
+            pre[cur.id] = cur.name;
+            return pre;
+        }, {})
+    };
+};
+
+export default connect(mapStateToProps)(NewProto);

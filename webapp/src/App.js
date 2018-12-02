@@ -21,7 +21,8 @@ class App extends Component {
     };
 
     /**函数组件 */
-    this.$NewProtoModal = NewProtoModal(this);
+    console.log(props);
+    this.$NewProtoModal = NewProtoModal(this, props);
 
     this.onNewProto = this.onNewProto.bind(this);
     this.onNav = this.onNav.bind(this);
@@ -88,7 +89,13 @@ class App extends Component {
 
 App = install(App);
 
+const mapStateToProps = (state) => {
+  return {
+    protoTypes: state.protoTypes
+  };
+};
+
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   { setCurrentProto }
 )(App));

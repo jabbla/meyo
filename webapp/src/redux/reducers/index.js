@@ -3,7 +3,11 @@ import elements from '../../proros/element';
 
 const initialState = {
     currentProto: {},
-    elements
+    elements,
+    protoTypes: [
+        {id: 1, name: '模块原型'},
+        {id: 2, name: '页面原型'}
+    ]
 };
 
 function meyoApp(state = initialState, action){
