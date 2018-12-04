@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ElementOptions from './components/ElementOptions';
 import ModuleOptions from "./components/ModuleOptions";
 import LayoutOptions from './components/LayoutOptions';
+import SetProtoModal from './components/SetProtoModal';
 
 import './index.scss';
 
@@ -17,10 +18,13 @@ class NewProto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentProto: {}
+            currentProto: {},
+            showSetProtoModal: false
         };
         
+        this.handleModalClose = this.handleModalClose.bind(this);
         this.onOptionChange = this.onOptionChange.bind(this);
+        this.handleConfirm = this.handleConfirm.bind(this);
     }
 
     detectStorage() {
@@ -36,11 +40,29 @@ class NewProto extends Component {
         this.initContainer();
     }
 
+    handleModalClose() {
+        this.setState({
+            showSetProtoModal: false
+        });
+    }
+
+    handleConfirm(fieldsValue) {
+        console.log(fieldsValue, 'confirm');
+    }
+
     initContainer() {
         const container = document.querySelector('#layout-region');
+        const layoutContainer = new Container({elem: container});
 
         this.setState({
-            containLayout: new Container({elem: container})
+            containLayout: layoutContainer
+        });
+
+        layoutContainer.on('proto-drop', (protoLayout) => {
+            this.setState({
+                showSetProtoModal: true
+            });
+            console.log(protoLayout);
         });
     }
 
@@ -86,6 +108,11 @@ class NewProto extends Component {
                     <div className="m-layout-region m-dropable" id="layout-region">
                         
                     </div>
+                    <SetProtoModal 
+                        visible={this.state.showSetProtoModal} 
+                        closeModal={this.handleModalClose}
+                        onConfirm={this.handleConfirm}
+                    />
                 </Content>
                 </Layout>
             </Layout>

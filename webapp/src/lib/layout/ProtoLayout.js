@@ -12,9 +12,7 @@ class ProtoLayout {
 
         setTimeout(() => {
             //触发beforeCreateDom钩子函数
-            this.trigger('beforeCreateDom');
-            this.createLayoutDom();
-            this.trigger('afterCreateDom')
+            this.trigger('initialized');
         }, 0);
     }
 

@@ -52,7 +52,6 @@ const NewProtoModal = (context, { protoTypes }) => {
       };
       return (
         <Modal
-          centered
           title="新建原型"
           cancelText="取消"
           okText="确认"
