@@ -12,9 +12,9 @@ class Emitter {
 
         if(!callbacks[type]) {
             callbacks[type] = [callback];
+        }else{
+            callbacks[type].push(callback);
         }
-
-        callbacks.push(callback);
 
         return this;
     }
@@ -48,7 +48,7 @@ class Emitter {
         const { callbacks } = this;
 
         let typedCallbacks = callbacks[type];
-
+        
         if(typedCallbacks){
             typedCallbacks.forEach(callback => callback(event));
         }

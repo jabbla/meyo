@@ -1,7 +1,7 @@
 import Emitter from '../Emitter';
 
-const beforeCreateDom = Symbol('beforeCreateDom');
-const afterCreateDom = Symbol('afterCreateDom');
+//const beforeCreateDom = Symbol('beforeCreateDom');
+//const afterCreateDom = Symbol('afterCreateDom');
 
 class ProtoLayout {
     static id = 0;
@@ -10,10 +10,12 @@ class ProtoLayout {
         this.id = ++ProtoLayout.id;
         this._emitter = new Emitter();
 
-        //触发beforeCreateDom钩子函数
-        this.trigger(beforeCreateDom);
-        this.createLayoutDom();
-        this.trigger(afterCreateDom)
+        setTimeout(() => {
+            //触发beforeCreateDom钩子函数
+            this.trigger('beforeCreateDom');
+            this.createLayoutDom();
+            this.trigger('afterCreateDom')
+        }, 0);
     }
 
     createLayoutDom() {

@@ -25,6 +25,9 @@ class Container {
         const sourceInfo = JSON.parse(dataTransfer.getData('text/plain'));
 
         const layoutIns = createLayout({ sourceInfo });
+        layoutIns.on('beforeCreateDom', () => {
+            console.log('334');
+        });
         console.log(layoutIns)
     }
 };
