@@ -47,7 +47,15 @@ class NewProto extends Component {
     }
 
     handleConfirm(fieldsValue) {
-        console.log(fieldsValue, 'confirm');
+        const { state } = this;
+        let { containLayout, fromLayout, layoutId } = state;
+
+        let event = {sourceInfo: state.currentSourceInfo, options: fieldsValue};
+        if(fromLayout){
+            containLayout.trigger('layout:proto-drop', { ...event, layoutId });
+        }else{
+            containLayout.trigger('container:append-layout', event)   
+        }
     }
 
     initContainer() {
@@ -58,16 +66,16 @@ class NewProto extends Component {
             containLayout: layoutContainer
         });
 
-        layoutContainer.on('proto-drop', (protoLayout) => {
+        layoutContainer.on('container:proto-drop', ({sourceInfo, fromLayout, layoutId}) => {
             this.setState({
-                showSetProtoModal: true
+                showSetProtoModal: true,
+                currentSourceInfo: sourceInfo,
+                fromLayout, layoutId
             });
-            console.log(protoLayout);
         });
     }
 
     onOptionChange() {
-        console.log('option change');
     }
 
     render() {

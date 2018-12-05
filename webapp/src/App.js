@@ -21,7 +21,6 @@ class App extends Component {
     };
 
     /**函数组件 */
-    console.log(props);
     this.$NewProtoModal = NewProtoModal(this, props);
 
     this.onNewProto = this.onNewProto.bind(this);

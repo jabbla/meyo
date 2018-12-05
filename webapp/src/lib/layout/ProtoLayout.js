@@ -9,15 +9,26 @@ class ProtoLayout {
         this._sourceInfo = option.sourceInfo;
         this.id = ++ProtoLayout.id;
         this._emitter = new Emitter();
-
+        this._parent = option.parent;
         setTimeout(() => {
             //触发beforeCreateDom钩子函数
             this.trigger('initialized');
         }, 0);
+
+        this._parent.on('broadcast', this.onBroadcast.bind(this));
+        this.on('build', this.onBuild.bind(this));
     }
 
     createLayoutDom() {
         //抽象方法
+    }
+
+    onBroadcast(event) {
+        if(event.layoutId === this.id){
+            this.trigger(event.type, event);
+            return;
+        }
+        this.trigger('broadcast', event);
     }
 
     on(type, callback) {
@@ -28,8 +39,12 @@ class ProtoLayout {
         this._emitter.off(type, callback);
     }
 
-    trigger(type) {
-        this._emitter.trigger(type);
+    trigger(type, event) {
+        this._emitter.trigger(type, event);
+    }
+
+    waterFallTrigger(type, event) {
+        return this._emitter.waterFallTrigger(type, event);
     }
 };
 

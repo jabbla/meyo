@@ -17,7 +17,6 @@ class SetProtoModal extends Component {
 
     handleOK(e) {
         const { validateFields } = this.props.form;
-        console.log('lll');
         validateFields((err, fieldsValue) => {
             if(err){
                 return;
@@ -45,26 +44,27 @@ class SetProtoModal extends Component {
                         labelCol={{span: 3}}
                         wrapperCol={{span: 10}}
                     >
-                        {getFieldDecorator('width', {
-                            rules: [{required: true, message: '请输入宽度'}]
-                        })(
-                            <InputNumber
-                                option={{initialValue: 100}}
-                            />
-                        )} px
+                        {getFieldDecorator('width', {})(
+                            <Input/>
+                        )}
                     </FormItem>
                     <FormItem
                         label="高度"
                         labelCol={{span: 3}}
                         wrapperCol={{span: 10}}
                     >
-                        {getFieldDecorator('height', {
-                            rules: [{required: true, message: '请输入宽度'}]
-                        })(
-                            <InputNumber
-                                option={{initialValue: 100}}
-                            />
-                        )} px
+                        {getFieldDecorator('height', {})(
+                            <Input/>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="内容"
+                        labelCol={{span: 3}}
+                        wrapperCol={{span: 20}}
+                    >
+                        {getFieldDecorator('content', {})(
+                            <Input/>
+                        )}
                     </FormItem>
                 </Form>
 
