@@ -27,8 +27,7 @@ class Container {
     appendLayout(layout, options) {
         this._protos.push(layout);
         
-        let layoutElement = layout.waterFallTrigger('build', options);
-        this._elem.append(layoutElement);
+        this._elem.append(layout.waterFallTrigger('build', options));
     }
 
     handle_dragover(e) {

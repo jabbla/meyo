@@ -1,4 +1,5 @@
 import ProtoLayout from './ProtoLayout';
+import { createLayout } from '../layout';
 
 const RESET_STYLE = {
     margin: '0',
@@ -8,8 +9,9 @@ const RESET_STYLE = {
 class ElementLayout extends ProtoLayout {
     constructor(option) {
         super(option);
-
+        
         this.on('layout:proto-drop', this.onProtoDrop.bind(this));
+        this.on('layout:append-layout', this.onAppendLayout.bind(this));
     }
 
     onBuild(options) {
@@ -20,7 +22,20 @@ class ElementLayout extends ProtoLayout {
         return this._layoutElem;
     }
 
-    onProtoDrop(e) {
+    onAppendLayout(event) {
+        let { sourceInfo, options } = event;
+        this.appendLayout(createLayout({sourceInfo, parent: this}), options);
+    }
+
+    onProtoDrop(event) {
+        this.trigger('layout:append-layout', event);
+    }
+
+    appendLayout(layout, options) {
+        let { _sourceInfo } = this;
+        this._protos.push(layout);
+
+        this._layoutElem.insertAdjacentElement('afterbegin', layout.waterFallTrigger('build', options));
     }
 
     addDomListeners() {
@@ -44,13 +59,20 @@ class ElementLayout extends ProtoLayout {
     createElement(options) {
         let { _sourceInfo } = this;
         let elem = document.createElement(_sourceInfo.tagname);
+        let contentElem = document.createElement('span');
+        this._contentElem = contentElem;
 
-        elem.innerHTML = options.content || _sourceInfo.name;
+        contentElem.innerHTML = options.content || _sourceInfo.name;
+        elem.append(contentElem);
+
+        Object.assign(contentElem.style, RESET_STYLE, {
+            position: 'absolute',
+            right: '0',
+            top: '0'
+        });
 
         Object.assign(elem.style, RESET_STYLE, {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            position: 'relative',
             width: options.width,
             height: options.height,
             border: '2px solid #ddd',

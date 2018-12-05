@@ -10,6 +10,7 @@ class ProtoLayout {
         this.id = ++ProtoLayout.id;
         this._emitter = new Emitter();
         this._parent = option.parent;
+        this._protos = [];
         setTimeout(() => {
             //触发beforeCreateDom钩子函数
             this.trigger('initialized');
