@@ -52,8 +52,22 @@ class Emitter {
         if(typedCallbacks){
             typedCallbacks.forEach(callback => callback(event));
         }
+    }
+    /**
+     * 触发瀑布流事件，将event作为第一个callback的参数，前一个callback的return值为后一个callback的参数，最后返回值为最后一个callback的返回值
+     * @param {string} type 事件类型
+     * @param {any} event 事件对象
+     */
+    waterFallTrigger(type, event) {
+        const { callbacks } = this;
 
-        return this;
+        let typedCallbacks = callbacks[type];
+        
+        if(typedCallbacks){
+            return typedCallbacks.reduce((prev, callback) => {
+                return callback(prev)
+            }, event);
+        }
     }
 };
 
