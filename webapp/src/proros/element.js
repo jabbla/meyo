@@ -41,6 +41,11 @@ const elements = [
     },
     {
         type: 'element',
+        tagname: 'a',
+        name: '链接'
+    },
+    {
+        type: 'element',
         tagname: 'span',
         name: '文本容器'
     }

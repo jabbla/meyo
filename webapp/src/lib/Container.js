@@ -6,8 +6,8 @@ class Container {
     constructor(option) {
         this._elem = option.elem;
         this._protos = [];
+        this._proto = option.proto;
         this._emitter = new Emitter();
-
         this.addListeners();
         this.on('container:append-layout', this.onAppendLayout.bind(this));
     }
@@ -59,6 +59,13 @@ class Container {
         }else{
             this._emitter.trigger('broadcast', {type, ...event});
         }
+    }
+
+    transformToJson() {
+        let { _protos, _proto } = this;
+        console.log('transformToJson', _proto);
+
+        return _protos;
     }
 };
 

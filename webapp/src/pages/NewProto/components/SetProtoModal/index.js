@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Form, Input, Checkbox, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 class SetProtoModal extends Component {
     constructor(props) {
@@ -13,6 +14,16 @@ class SetProtoModal extends Component {
 
     handleCancel(e) {
         this.props.closeModal();
+    }
+
+    validateJson(rule, value, callback){
+        try{
+            value && JSON.parse(value);
+            callback();
+        }catch(err){
+            callback('手写样式应为正确的JSON格式');
+        }
+        
     }
 
     handleOK(e) {
@@ -64,6 +75,19 @@ class SetProtoModal extends Component {
                     >
                         {getFieldDecorator('content', {})(
                             <Input/>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="手写样式"
+                        labelCol={{span: 3}}
+                        wrapperCol={{span: 20}}
+                    >
+                        {getFieldDecorator('cssText', {
+                            rules: [{
+                                validator: this.validateJson
+                            }]
+                        })(
+                            <TextArea autosize/>   
                         )}
                     </FormItem>
                 </Form>

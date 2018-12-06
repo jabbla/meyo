@@ -1,5 +1,6 @@
 import ProtoLayout from './ProtoLayout';
 import { createLayout } from '../layout';
+import { parseStyleText } from '../utils';
 
 const RESET_STYLE = {
     margin: '0',
@@ -64,12 +65,13 @@ class ElementLayout extends ProtoLayout {
 
         contentElem.innerHTML = options.content || _sourceInfo.name;
         elem.append(contentElem);
-
         Object.assign(contentElem.style, RESET_STYLE, {
             position: 'absolute',
             right: '0',
             top: '0'
         });
+
+        let styleObj = parseStyleText(options.cssText);
 
         Object.assign(elem.style, RESET_STYLE, {
             position: 'relative',
@@ -77,7 +79,7 @@ class ElementLayout extends ProtoLayout {
             height: options.height,
             border: '2px solid #ddd',
             boxSizing: 'border-box'
-        });
+        }, styleObj);
         
         return elem;
     }

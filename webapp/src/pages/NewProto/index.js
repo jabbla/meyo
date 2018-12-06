@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Tabs } from 'antd';
+import { Layout, Tabs, Button } from 'antd';
 import { Draggable, Swappable, Droppable } from '@shopify/draggable';
 import Container from '../../lib/Container';
 import { connect } from 'react-redux';
@@ -24,14 +24,13 @@ class NewProto extends Component {
         
         this.handleModalClose = this.handleModalClose.bind(this);
         this.onOptionChange = this.onOptionChange.bind(this);
+        this.onSave = this.onSave.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
     }
 
     detectStorage() {
         let currentProto = (Object.keys(this.props.currentProto).length && this.props.currentProto) || JSON.parse(window.localStorage.getItem('currentProto'));
-        this.setState({
-            currentProto
-        });
+        this.state.currentProto = currentProto;
         window.localStorage.setItem('currentProto', JSON.stringify(currentProto));
     }
 
@@ -44,6 +43,13 @@ class NewProto extends Component {
         this.setState({
             showSetProtoModal: false
         });
+    }
+
+    onSave() {
+        const { state } = this;
+        let { containLayout } = state;
+
+        console.log(containLayout.transformToJson());
     }
 
     handleConfirm(fieldsValue) {
@@ -60,7 +66,7 @@ class NewProto extends Component {
 
     initContainer() {
         const container = document.querySelector('#layout-region');
-        const layoutContainer = new Container({elem: container});
+        const layoutContainer = new Container({elem: container, proto: this.state.currentProto});
 
         this.setState({
             containLayout: layoutContainer
@@ -113,6 +119,13 @@ class NewProto extends Component {
                     <h6 className="m-layout-title">
                         原型类型：{protoTypeMap[protoType]}，原型名称：{protoName}，原型描述：{protoDesc}
                     </h6>
+                    <Button 
+                        type="primary"
+                        size="small"
+                        onClick={this.onSave}
+                    >
+                        保存
+                    </Button>
                     <div className="m-layout-region m-dropable" id="layout-region">
                         
                     </div>
