@@ -1,5 +1,7 @@
 import { initLayoutContainerDom } from './dom';
 import { createLayout } from './layout';
+import ModuleLayout from './layout/ModuleLayout';
+import PageLayout from './layout/PageLayout';
 import Emitter from './Emitter';
 
 class Container {
@@ -7,6 +9,7 @@ class Container {
         this._elem = option.elem;
         this._protos = [];
         this._proto = option.proto;
+        this._option = option;
         this._emitter = new Emitter();
         this.addListeners();
         this.on('container:append-layout', this.onAppendLayout.bind(this));
@@ -63,7 +66,19 @@ class Container {
 
     transformToJson() {
         let { _protos, _proto } = this;
-        console.log('transformToJson', _proto);
+        let { protoTypeMap } = this._option;
+        let protoTypeName = protoTypeMap[_proto.type];
+        let json = '';
+        console.log('transformToJson', protoTypeMap);
+        switch(protoTypeName){
+            case 'module': 
+                json = ModuleLayout.transformToJson({ _protos, _proto, protoTypeMap });
+                break;
+            case 'element': 
+                json = PageLayout.transformToJson({ _protos, _proto, protoTypeMap });
+                break;
+
+        }
 
         return _protos;
     }

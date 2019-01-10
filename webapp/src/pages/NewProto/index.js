@@ -66,7 +66,7 @@ class NewProto extends Component {
 
     initContainer() {
         const container = document.querySelector('#layout-region');
-        const layoutContainer = new Container({elem: container, proto: this.state.currentProto});
+        const layoutContainer = new Container({elem: container, proto: this.state.currentProto, protoTypeMap: this.props.protoTypeMap});
 
         this.setState({
             containLayout: layoutContainer

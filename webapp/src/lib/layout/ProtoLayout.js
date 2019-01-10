@@ -20,10 +20,6 @@ class ProtoLayout {
         this.on('build', this.onBuild.bind(this));
     }
 
-    createLayoutDom() {
-        //抽象方法
-    }
-
     onBroadcast(event) {
         if(event.layoutId === this.id){
             this.trigger(event.type, event);

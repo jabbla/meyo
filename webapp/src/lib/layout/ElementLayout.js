@@ -62,6 +62,7 @@ class ElementLayout extends ProtoLayout {
         let elem = document.createElement(_sourceInfo.tagname);
         let contentElem = document.createElement('span');
         this._contentElem = contentElem;
+        this._instanceOpts = options;
 
         contentElem.innerHTML = options.content || _sourceInfo.name;
         elem.append(contentElem);
@@ -82,6 +83,12 @@ class ElementLayout extends ProtoLayout {
         }, styleObj);
         
         return elem;
+    }
+
+    transformToJson() {
+        let jsonObj = {
+            type: 'element'
+        };
     }
 };
 

@@ -5,8 +5,8 @@ const initialState = {
     currentProto: {},
     elements,
     protoTypes: [
-        {id: 1, name: '模块原型'},
-        {id: 2, name: '页面原型'}
+        {id: 1, name: 'module'},
+        {id: 2, name: 'page'}
     ]
 };
 
