@@ -12,6 +12,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.18.0"
+    "bluebird": "^3.5.3",
+    "commander": "^2.18.0",
+    "js-beautify": "^1.8.9",
+    "prettify-html": "^0.0.2",
+    "tapable": "^1.1.1"
   }
 }

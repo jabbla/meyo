@@ -6,6 +6,8 @@
 meyo(options, config)
 ```
 
+### options
+
 **options.proto**
 
 可为javascript对象，也可为json文件路径字符串（绝对路径）,
@@ -98,4 +100,14 @@ modules = [
         children: [],   //子节点信息
     }
 ];
+```
+
+### config
+
+**config.plugins**
+
+```js
+var config = {
+    plugins: []
+};
 ```
